@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lightweight Python Frontend</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Lightweight Python Frontend</h1>
+        <div class="card">
+            <h2>Test API</h2>
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button onclick="sayHello()">Say Hello</button>
+            <div id="result"></div>
+        </div>
+        <div class="info">
+            <p>This is a lightweight Flask container running on port 5000</p>
+        </div>
+    </div>
+
+    <script>
+        async function sayHello() {
+            const name = document.getElementById('nameInput').value || 'World';
+            const response = await fetch('/api/hello', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: name })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerHTML = `<p>${data.message}</p>`;
+        }
+    </script>
+</body>
+</html>
